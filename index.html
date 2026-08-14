@@ -6,7 +6,35 @@
 </head>
 <body>
     <h1>Expense Tracker</h1>
-    <p>Open the browser console to see the output.</p>
+
+    <h2>Add Expense</h2>
+    <label for="name-input">Name:</label>
+    <input type="text" id="name-input">
+
+    <label for="amount-input">Amount:</label>
+    <input type="number" id="amount-input" step="0.01">
+
+    <label for="category-input">Category:</label>
+    <input type="text" id="category-input">
+
+    <button id="add-expense-btn">Add Expense</button>
+
+    <hr>
+
+    <table id="expense-table" border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody id="expense-table-body">
+            <!-- Rows will be added here dynamically -->
+        </tbody>
+    </table>
+
+    <h3>Total: $<span id="total-display">0.00</span></h3>
 
     <script src="script.js"></script>
 </body>

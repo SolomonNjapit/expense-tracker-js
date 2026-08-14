@@ -1,68 +1,71 @@
-// ===== Part 1: Store Sample Expenses =====
+// ===== Part 1: Store Expenses as an Array of Objects =====
 
-let rent = 500;
-let food = 90;
-let transport = 45;
-let internet = 60;
-let entertainment = 120;
-let utilities = 75;
-// ===== Part 2: Flag High Spending =====
+let expenses = [
+  { name: "Rent", amount: 500, category: "Housing" },
+  { name: "Food", amount: 90, category: "Food" },
+  { name: "Transport", amount: 45, category: "Transport" },
+  { name: "Internet", amount: 60, category: "Utilities" },
+  { name: "Entertainment", amount: 120, category: "Entertainment" },
+  { name: "Utilities", amount: 75, category: "Utilities" }
+];
 
-if (rent > 100) {
-    console.log("Rent: High Spending");
-} else {
-    console.log("Rent: Normal Spending");
+console.log(expenses);
+// ===== Part 2: Calculate Total Expenses =====
+
+function calculateTotal(expenseArray) {
+  let total = 0;
+
+  for (let i = 0; i < expenseArray.length; i++) {
+    total += expenseArray[i].amount;
+  }
+
+  return total.toFixed(2);
 }
 
-if (food > 100) {
-    console.log("Food: High Spending");
-} else {
-    console.log("Food: Normal Spending");
+console.log("Total Expenses: $" + calculateTotal(expenses));
+// ===== Part 3: Render Expenses to the DOM =====
+
+function renderExpenses(expenseArray) {
+  const tableBody = document.getElementById("expense-table-body");
+  tableBody.innerHTML = ""; // clear existing rows
+
+  for (let i = 0; i < expenseArray.length; i++) {
+    const expense = expenseArray[i];
+
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${expense.name}</td>
+      <td>$${expense.amount.toFixed(2)}</td>
+      <td>${expense.category}</td>
+    `;
+
+    tableBody.appendChild(row);
+  }
+
+  document.getElementById("total-display").textContent = calculateTotal(expenseArray);
 }
 
-if (transport > 100) {
-    console.log("Transport: High Spending");
-} else {
-    console.log("Transport: Normal Spending");
-}
+renderExpenses(expenses);
+// ===== Part 4: Wire Up the Form with Events =====
 
-if (internet > 100) {
-    console.log("Internet: High Spending");
-} else {
-    console.log("Internet: Normal Spending");
-}
+const addExpenseBtn = document.getElementById("add-expense-btn");
 
-if (entertainment > 100) {
-    console.log("Entertainment: High Spending");
-} else {
-    console.log("Entertainment: Normal Spending");
-}
+addExpenseBtn.addEventListener("click", function () {
+  const nameInput = document.getElementById("name-input");
+  const amountInput = document.getElementById("amount-input");
+  const categoryInput = document.getElementById("category-input");
 
-if (utilities > 100) {
-    console.log("Utilities: High Spending");
-} else {
-    console.log("Utilities: Normal Spending");
-}
-// ===== Part 3: Calculate Total Expenses =====
+  const newExpense = {
+    name: nameInput.value,
+    amount: parseFloat(amountInput.value),
+    category: categoryInput.value
+  };
 
-let expenses = [rent, food, transport, internet, entertainment, utilities];
+  expenses.push(newExpense);
 
-let total = 0;
+  renderExpenses(expenses);
 
-for (let i = 0; i < expenses.length; i++) {
-    total += expenses[i];
-}
-
-console.log("Total Expenses: $" + total);
-// ===== Part 4: Budget Check =====
-
-let monthlyIncome = 800;
-
-console.log("Monthly Income: $" + monthlyIncome);
-console.log("Total Expenses: $" + total);
-
-if (total <= monthlyIncome) {
-    console.log("Status: Within Budget");
-} else {
-    console.log("Status: Over Budget");
-}
+  nameInput.value = "";
+  amountInput.value = "";
+  categoryInput.value = "";
+});
